@@ -16,16 +16,16 @@ jobs:
     - name: Add upstream remote
       run: git remote add upstream https://github.com/dcm4che/dcm4che.git
 
-    - name: Fetch from upstream
-      run: git fetch upstream
+    - name: Fetch from upstream master
+      run: git fetch upstream master
 
-    - name: Update local main
+    - name: Update local master
       run: |
-        git checkout main
+        git checkout master
         git merge upstream/master
 
     - name: Push updates
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
+        branch: master
