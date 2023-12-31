@@ -19,10 +19,23 @@ jobs:
     - name: Fetch from upstream master
       run: git fetch upstream master
 
-    - name: Update local master
+    - name: Check for changes from upstream
+      id: upstream_changes
+      run: |
+        if git diff --quiet master upstream/master; then
+          echo "No new changes from upstream"
+          echo "::set-output name=changes::false"
+        else
+          echo "New changes found from upstream"
+          echo "::set-output name=changes::true"
+        fi
+
+    - name: Update local master from upstream
+      if: steps.upstream_changes.outputs.changes == 'true'
       run: |
         git checkout master
         git merge upstream/master
+
 
     - name: Push updates
       uses: ad-m/github-push-action@master
