@@ -34,7 +34,7 @@ jobs:
       if: steps.upstream_changes.outputs.changes == 'true'
       run: |
         git checkout master
-        git merge upstream/master
+        git merge upstream/master --allow-unrelated-histories
 
 
     - name: Push updates
